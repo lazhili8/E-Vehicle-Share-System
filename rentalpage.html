@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Details - CarZest</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .rental-form-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Rental Details Form -->
+    <div class="container rental-form-container">
+        <h2 class="text-center mb-4">Rental Details</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Pick-up Location</label>
+                <input type="text" class="form-control" id="location" placeholder="Enter pick-up location" required>
+            </div>
+
+            <div class="form-group">
+                <label for="return-location">Return Location</label>
+                <input type="text" class="form-control" id="return-location" placeholder="Enter return location" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea class="form-control" id="address" rows="2" placeholder="Enter your full address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required maxlength="10" pattern="[0-9]{10}" title="Phone number must be 10 digits">
+            </div>
+
+            <div class="form-group">
+                <label for="passport">Passport Number</label>
+                <input type="text" class="form-control" id="passport" placeholder="Enter your passport number" required maxlength="6" pattern="[A-Za-z0-9]{6}" title="Passport number must be 6 characters">
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="trip-date">Date of Trip</label>
+                <input type="date" class="form-control" id="trip-date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="return-date">Return Date</label>
+                <input type="date" class="form-control" id="return-date" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit Rental Details</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

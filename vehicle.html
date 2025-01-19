@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles - Chime</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            /* Ensure full height */
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+        }
+
+        /* Fullscreen container */
+        .container {
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar img {
+            height: 40px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar ul li .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2c3e50;
+            top: 100%;
+            left: 0;
+            min-width: 150px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .navbar ul li .dropdown a {
+            color: white;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .navbar ul li .dropdown a:hover {
+            background-color: #34495e;
+        }
+
+        .navbar ul li:hover .dropdown {
+            display: block;
+        }
+
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tabs button {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .tabs button.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .card .description {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .search-bar select,
+        .search-bar input {
+            border: none;
+            padding: 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .search-bar input[type="date"] {
+            padding: 10px;
+        }
+
+        .search-bar button {
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: hsl(329, 81%, 60%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .interactive-box {
+            border: 2px solid #ff1493;
+            /* Border color */
+            border-radius: 10px;
+            /* Rounded corners */
+            padding: 15px;
+            /* Padding inside the box */
+            margin: 20px;
+            /* Margin outside the box */
+            transition: transform 0.3s;
+            /* Smooth transition for hover effect */
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="index.html">
+        <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/logo.jpg" width="40" />
+        C H I M E
+    </a>
+    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-ul-li-a">
+                <a class="nav-link" href="index.html">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">
+                    About Us
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link active" href="vehicle.html">
+                    Vehicles
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link " href="login.html">
+                    Vehicles
+                </a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="map.html">
+                    Location
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Location
+                </a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="account.html">
+                    MyAccount
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="register.html">
+                    Register
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Login
+                </a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="contact_us.html">
+                    Contact Us
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <!-- Hero Section for Vehicles -->
+    <section class="hero-section" style="background-image: url('../static/images/ev-charge.jpg'); height: 660px;">
+        <div class="container text-white text-center d-flex flex-column justify-content-center align-items-center"
+            style="height: 100%;">
+            <h1 class="display-4">Find the Perfect Electric <span class="auto-type"></span></h1>
+            <p class="lead" style="font-size: 1.3rem; color: #759ec6; font-weight: bold;">From Economy to Luxury, we
+                have it all!</p>
+        </div>
+    </section>
+
+
+    <!-- Search Bar -->
+    <div class="interactive-box">
+        <div class="search-bar">
+            <select class="form-control" id="pickup-location">
+                <option value="" disabled selected>Pick-up Location</option>
+                <option value="location1">Glasgow</option>
+                <option value="location2">Edinburgh</option>
+                <option value="location3">London</option>
+                <option value="location4">Aberdeen</option>
+            </select>
+            <select class="form-control" id="return-location">
+                <option value="" disabled selected>Return Location</option>
+                <option value="location1">Glasgow</option>
+                <option value="location2">Edinburgh</option>
+                <option value="location3">London</option>
+                <option value="location4">Aberdeen</option>
+            </select>
+            <input class="form-control" id="pickup-time" placeholder="Pick-up Time" type="datetime-local" />
+            <input class="form-control" id="return-time" placeholder="Return Time" type="datetime-local" />
+            <br><br>
+            <a id="get-car-btn" class="btn btn-primary" href="#">GET CAR</a>
+        </div>
+    </div>
+
+    <!-- Main Vehicles Grid -->
+    <div class="container mt-5">
+        <h2 class="text-center">Featured Electric Vehicles</h2>
+        <div class="tabs">
+            <button class="tablink" onclick="openTab(event, 'ebike')">E-Bike</button>
+            <button class="tablink" onclick="openTab(event, 'escooter')">E-Scooter</button>
+
+        </div>
+        <div class="row mt-4 content" id="ebike">
+            <div class="col-md-12">
+                <div class="carousel slide" data-ride="carousel" id="ebikeCarousel">
+                    <div class="carousel-inner">
+                        <!-- E-Bike 1 -->
+                        <div class="carousel-item active">
+                            <div class="card">
+                                <img alt="VanMoof Electrified S" class="card-img-top" height="200"
+                                    src="static/images/e-bike.jpg" width="300" />
+                                <div class="card-body">
+                                    <h5 class="card-title">VanMoof Electrified S</h5>
+                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <a href="#" class="btn btn-success">Rent Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- E-Bike 2 -->
+                        <div class="carousel-item">
+                            <div class="card">
+                                <img alt="Zoom Flyte 3" class="card-img-top" height="200"
+                                    src="static/images/e-bike2.jpg" width="300" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Zoom Flyte 3</h5>
+                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <a href="#" class="btn btn-success">Rent Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" data-slide="prev" href="#ebikeCarousel" role="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" data-slide="next" href="#ebikeCarousel" role="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 content" id="escooter">
+            <div class="col-md-12">
+                <div class="carousel slide" data-ride="carousel" id="escooterCarousel">
+                    <div class="carousel-inner">
+                        <!-- E-Scooter 1 -->
+                        <div class="carousel-item active">
+                            <div class="card">
+                                <img alt="Xiaomi Mi M365" class="card-img-top" height="200"
+                                    src="static/images/e-scooter.jpg" width="300" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Xiaomi Mi M365</h5>
+                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <a href="#" class="btn btn-success">Rent Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- E-Scooter 2 -->
+                        <div class="carousel-item">
+                            <div class="card">
+                                <img alt="Xiaomi FluxFlyer 2" class="card-img-top" height="200"
+                                    src="static/images/e-scooter2.jpg" width="300" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Xiaomi FluxFlyer 2</h5>
+                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <a href="#" class="btn btn-success">Rent Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" data-slide="prev" href="#escooterCarousel" role="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" data-slide="next" href="#escooterCarousel" role="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" data-slide="prev" href="#ecarCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" data-slide="next" href="#ecarCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-next-icon"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            var i, content, tablinks;
+            content = document.getElementsByClassName("content");
+            for (i = 0; i < content.length; i++) {
+                content[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        // Default open tab
+        document.getElementsByClassName("tablink")[0].click();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        document.getElementById('get-car-btn').addEventListener('click', function (event) {
+            // Prevent the default action of the link
+            event.preventDefault();
+
+            // Get the values of the inputs
+            const pickupLocation = document.getElementById('pickup-location').value;
+            const returnLocation = document.getElementById('return-location').value;
+            const pickupTime = document.getElementById('pickup-time').value;
+            const returnTime = document.getElementById('return-time').value;
+
+            // Check if all fields are filled
+            if (!pickupLocation || !returnLocation || !pickupTime || !returnTime) {
+                alert('Please fill out all fields before proceeding.');
+            } else {
+                // Redirect to vehicle.html if all fields are filled
+                window.location.href = 'vehicle.html';
+            }
+        });
+    </script>
+    <script>
+        var typed = new Typed(".auto-type", {
+            strings: ['Scooter', 'Bike'],
+            typeSpeed: 150,
+            backSpeed: 150,
+            loop: true
+        })
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

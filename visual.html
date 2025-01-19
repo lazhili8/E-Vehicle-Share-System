@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Report</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <script>
+        // Automatically enter full-screen mode
+        function enterFullscreen() {
+            const iframe = document.querySelector("iframe");
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) { // Firefox
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { // IE/Edge
+                iframe.msRequestFullscreen();
+            }
+        }
+
+        window.onload = enterFullscreen;
+    </script>
+</head>
+<body>
+    <iframe 
+        title="Power BI Report" 
+        src="https://app.powerbi.com/view?
+
+r=eyJrIjoiZTM2MDU2NzktNjA3Mi00NjI5LWE0NzMtOTQ0NmU3ODU2NGQ1IiwidCI6IjZmMGJiNzJmLTUzNzctNGRkZi05MzZhLWI2YzcyYmYyMWFlMiIsImMiOjF9" frameborder="0" allowFullScreen="true">
+    </iframe>
+</body>
+</html>

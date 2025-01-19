@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Vehicles - Chime</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 100;
+            color: black;
+        }
+
+        .navbar {
+            background-color: #364451;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+        .navbar ul li a {
+            color: white;
+            /* This sets the font color of the navbar links to white */
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            color: black;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.8s;
+        }
+
+        .nav-link:hover {
+            background-color: plum;
+        }
+
+        .nav-link.active {
+            background-color: #FF66CC;
+            color: white;
+        }
+        body {
+            background-image: url('https://img.freepik.com/free-photo/facades-buildings-with-classical-architecture_23-2148184301.jpg?t=st=1731097472~exp=1731101072~hmac=a487849b8c6bb80442f0716f017ad76c7e4a6d1ad7e29acdf74c14dbd56ec4af&w=826');
+            background-size: cover;
+            background-attachment:scroll;
+        }
+        .track-header {
+            background: rgba(0, 123, 255, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .card {
+            flex: 0 0 48%;
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-content p {
+            margin: 0;
+        }
+        .location {
+            font-size: 14px;
+        }
+        .btn-custom {
+            background: #5a9bd8;
+            color: #fff;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-custom:hover {
+            background: #007bff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            height: 40px;
+        }
+        .search-bar input {
+            flex: 1;
+            max-width: 80%;
+            height: 40px;
+            padding: 5px 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .search-bar button {
+            width: 100px;
+            height: 40px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">
+            <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/images/bike.jpg" width="40" />
+            <span class="text-white text-2xl font-bold">C H I M E</span>
+        </a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">
+                        Home
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'operator_home' %}">
+                        MyDashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        Logout
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">
+                        Login
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <a href="{% url 'operator_home' %}" class="btn btn-custom mb-4">Back to Dashboard</a>
+
+        <div class="search-bar">
+            <input type="text" id="vehicleSearch" class="form-control" placeholder="Search for a vehicle by ID or Type...">
+            <button onclick="filterVehicles()" class="btn btn-custom">Search</button>
+        </div>
+
+        <div class="card-container" id="vehicleList">
+            {% for vehicle in vehicle_data %}
+            <div class="card vehicle-card" data-vehicle="Vehicle {{ vehicle.vehicleID }}">
+                <div class="card-body">
+                    <h5 class="card-title">Vehicle ID: {{ vehicle.vehicleID }}</h5>
+                    <p>Rental ID: {{ vehicle.rentalID }}</p>
+                    <p>Type: {{ vehicle.type }}</p>
+                    <p>Start Time: {{ vehicle.startTime }}</p>
+                    <p>End Time: {{ vehicle.endTime }}</p>
+                    <p>Defective: {{ vehicle.isDefective }}</p>
+                    <div class="card-content">
+                        <div>
+                            <p class="location">Start Location: <br> Longitude {{ vehicle.start_longitude }}, Latitude {{ vehicle.start_latitude }}</p>
+                            <p class="location">End Location: <br> Longitude {{ vehicle.end_longitude }}, Latitude {{ vehicle.end_latitude }}</p>
+                        </div>
+                        <a href="https://www.google.com/maps/dir/?api=1&origin={{ vehicle.start_longitude }},{{ vehicle.start_latitude }}&destination={{ vehicle.end_longitude }},{{ vehicle.end_latitude }}&travelmode=bicycling" target="_blank" class="btn btn-custom">View the starting and ending locations on Google Maps</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="text-center py-4 bg-dark text-white">
+        <div class="container">
+            <p>&copy; 2024 Chime Rentals. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function filterVehicles() {
+            const searchInput = document.getElementById('vehicleSearch').value.toLowerCase();
+            const vehicleCards = document.querySelectorAll('.vehicle-card');
+            vehicleCards.forEach(card => {
+                const vehicleName = card.getAttribute('data-vehicle').toLowerCase();
+                if (vehicleName.includes(searchInput)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

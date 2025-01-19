@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Reports - Chime</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 100;
+            color: black;
+            background-image: url('../static/images/register.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .navbar {
+            background-color: #364451;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .nav-item {
+            margin-left: 20px;
+        }
+        .nav-link {
+            color: black;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-link:hover {
+            background-color: plum;
+        }
+        .nav-link.active {
+            background-color: #FF66CC;
+            color: white;
+        }
+        .report-header {
+            background: rgba(40, 167, 69, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background: #28a745;
+            color: #fff;
+            transition: background 0.3s;
+        }
+        .btn-custom:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">
+            <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/bike.jpg" width="40" />
+            <span class="text-white text-2xl font-bold">C H I M E</span>
+        </a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'manager_home' %}">MyDashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="report-header">
+            <h2>Manager Reports</h2>
+            <p>View orders and vehicle activities within a specified date range and access visual reports.</p>
+        </div>
+
+        <form id="reportForm" class="my-4">
+            <div class="form-row align-items-end">
+                <div class="col-md-4">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" id="startDate" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="endDate">End Date</label>
+                    <input type="date" id="endDate" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-custom btn-block" onclick="generateReport()">Generate Report</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-custom btn-block" onclick="window.location.href='{% url 'visual_page' %}'">Visualize Report</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="reportResults" class="mt-5">
+            <!-- Tables for Rental, Vehicle, Payment, Operator, Manager, and Customer information will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        async function generateReport() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            if (!startDate || !endDate) {
+                alert('Please select both start and end dates.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/getVehicleActivities?startDate=${startDate}&endDate=${endDate}`);
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                const data = await response.json();
+
+                // Render Rental Table
+                let rentalTable = `<h4>Rental Information</h4>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th>Rental ID</th>
+                            <th>Customer</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                data.rentalData.forEach(rental => {
+                    rentalTable += `
+                    <tr>
+                        <td>${rental.rentalID}</td>
+                        <td>${rental.customer}</td>
+                        <td>${rental.startTime}</td>
+                        <td>${rental.endTime}</td>
+                    </tr>`;
+                });
+                rentalTable += `</tbody></table>`;
+
+                // Render Vehicle Table
+                let vehicleTable = `<h4>Vehicle Information</h4>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th>Vehicle ID</th>
+                            <th>Type</th>
+                            <th>Battery Status</th>
+                            <th>Location</th>
+                            <th>Is Defective</th>
+                            <th>Position X</th>
+                            <th>Position Y</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                data.vehicleData.forEach(vehicle => {
+                    vehicleTable += `
+                    <tr>
+                        <td>${vehicle.vehicleID}</td>
+                        <td>${vehicle.type}</td>
+                        <td>${vehicle.batteryStatus}%</td>
+                        <td>${vehicle.location}</td>
+                        <td>${vehicle.isDefective ? 'Yes' : 'No'}</td>
+                        <td>${vehicle.position_x}</td>
+                        <td>${vehicle.position_y}</td>
+                    </tr>`;
+                });
+                vehicleTable += `</tbody></table>`;
+
+                // Render Payment Table
+                let paymentTable = `<h4>Payment Information</h4>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th>Payment ID</th>
+                            <th>Amount</th>
+                            <th>Is Paid</th>
+                            <th>Card Number</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                data.paymentData.forEach(payment => {
+                    paymentTable += `
+                    <tr>
+                        <td>${payment.paymentID}</td>
+                        <td>£${payment.amount}</td>
+                        <td>${payment.isPaid ? 'Paid' : 'Not Paid'}</td>
+                        <td>${payment.cardNumber}</td>
+                        <td>${payment.expiryDate}</td>
+                    </tr>`;
+                });
+                paymentTable += `</tbody></table>`;
+
+                // Render Operator Table
+                let operatorTable = `<h4>Operator Information</h4>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th>Operator ID</th>
+                            <th>Name</th>
+                            <th>User Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                data.operatorData.forEach(operator => {
+                    operatorTable += `
+                    <tr>
+                        <td>${operator.operatorID}</td>
+                        <td>${operator.name}</td>
+                        <td>${operator.userType}</td>
+                    </tr>`;
+                });
+                operatorTable += `</tbody></table>`;
+
+                // Render Manager Table
+                let managerTable = `<h4>Manager Information</h4>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th>Manager ID</th>
+                            <th>Name</th>
+                            <th>User Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                data.managerData.forEach(manager => {
+                    managerTable += `
+                    <tr>
+                        <td>${manager.managerID}</td>
+                        <td>${manager.name}</td>
+                        <td>${manager.userType}</td>
+                    </tr>`;
+                });
+                managerTable += `</tbody></table>`;
+
+
+
+                document.getElementById('reportResults').innerHTML = rentalTable + vehicleTable + paymentTable + operatorTable + managerTable;
+
+            } catch (error) {
+                alert('Error generating report: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

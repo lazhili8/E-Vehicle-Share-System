@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charge Vehicles - Chime</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('../static/images/register.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .charge-header {
+            background: rgba(255, 193, 7, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .btn-custom {
+            background: #ffc107;
+            color: #fff;
+            transition: background 0.3s;
+        }
+        .btn-custom:hover {
+            background: #e0a800;
+        }
+        .search-bar, .filter-bar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Charge Vehicles Section -->
+<div class="container my-5">
+    <a href="{% url 'operator_home' %}" class="btn btn-custom mb-4">Back to Dashboard</a>
+
+    <div class="charge-header">
+        <h2>Charge Vehicles</h2>
+        <p>View and charge vehicles with depleted batteries. Ensure optimal performance for all vehicles.</p>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-bar mt-4">
+        <input type="number" id="batteryFilter" class="form-control" placeholder="Enter max battery level (e.g., 20)" oninput="filterVehiclesByBattery()">
+    </div>
+
+    <!-- Search Section -->
+    <div class="filter-bar mt-2">
+        <input type="number" id="vehicleSearch" class="form-control" placeholder="Search by Vehicle ID (e.g., 101)" oninput="searchVehicleByID()">
+    </div>
+
+    <!-- Vehicle Cards Section -->
+    <div class="row" id="vehicleList">
+        <!-- Vehicle cards will be populated dynamically -->
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchVehicles();
+    });
+
+    let vehicleData = []; 
+
+    // Fetch vehicle data from server
+    function fetchVehicles() {
+        fetch('/api/vehicles/')  // Update with your actual API endpoint
+            .then(response => response.json())
+            .then(data => {
+                vehicleData = data; 
+                renderVehicles(vehicleData); 
+            })
+            .catch(error => console.error('Error fetching vehicles:', error));
+    }
+
+    // Render vehicle cards
+    function renderVehicles(data) {
+        const vehicleList = document.getElementById('vehicleList');
+        vehicleList.innerHTML = '';
+        data.forEach(vehicle => {
+            const card = document.createElement('div');
+            card.className = 'col-md-4 mb-4 vehicle-card';
+            card.setAttribute('data-battery', vehicle.batteryStatus);
+            card.innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${vehicle.type} (${vehicle.vehicleID})</h5>
+                        <p class="card-text battery-status">Battery Level: ${vehicle.batteryStatus}%</p>
+                        <p class="card-text">Location: (${vehicle.position_x}, ${vehicle.position_y})</p>
+                        <button class="btn btn-custom" onclick="chargeVehicle(${vehicle.vehicleID}, this)">Charge Now</button>
+                    </div>
+                </div>`;
+            vehicleList.appendChild(card);
+        });
+    }
+
+    // Filter vehicles by battery level
+    function filterVehiclesByBattery() {
+        const maxBatteryLevel = document.getElementById('batteryFilter').value;
+        if (maxBatteryLevel === '') {
+            renderVehicles(vehicleData); 
+            return;
+        }
+        const filteredData = vehicleData.filter(vehicle => vehicle.batteryStatus <= maxBatteryLevel);
+        renderVehicles(filteredData); 
+    }
+
+    // Search vehicle by ID
+    function searchVehicleByID() {
+        const vehicleID = document.getElementById('vehicleSearch').value;
+        if (vehicleID === '') {
+            renderVehicles(vehicleData); 
+            return;
+        }
+        const filteredData = vehicleData.filter(vehicle => vehicle.vehicleID.toString() === vehicleID);
+        renderVehicles(filteredData); 
+    }
+
+    // Charge vehicle and update its battery status
+    function chargeVehicle(vehicleId, buttonElement) {
+        fetch(`/api/charge_vehicle/${vehicleId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()  
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    
+                    const card = buttonElement.closest('.card');
+                    const batteryStatusElement = card.querySelector('.battery-status');
+                    batteryStatusElement.textContent = 'Battery Level: 100%';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error charging vehicle:', error);
+            });
+    }
+
+    // Get CSRF token for AJAX POST requests
+    function getCSRFToken() {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+        return csrfToken ? csrfToken.value : '';
+    }
+</script>
+
+</body>
+</html>

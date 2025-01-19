@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Summary - CarZest</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: #364451; 
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white; 
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; 
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #FF66CC;
+            color: white;
+        }
+
+        /* Bill Summary Page Styling */
+        .bill-hero {
+            background-image: url('../images/bill_background.jpg'); 
+            background-size: cover; /* Ensures the image covers the entire div */
+            background-position: center center; /* Centers the image */
+            height: 400px; /* Adjust height for better visibility */
+            width: 100%; /* Ensures the background stretches to the full width */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .bill-hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .bill-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .total-cost {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="index.html">
+        <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/logo.jpg" width="40" />
+        C H I M E
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="vehicle.html">Vehicles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="map.html">Location</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="register.html">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="contact_us.html">Contact Us</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Bill Hero Section -->
+<div class="bill-hero">
+    <h1>Bill Summary</h1>
+</div>
+
+<!-- Bill Summary Section -->
+<div class="container my-5">
+    <div class="bill-section">
+        <h3 class="text-center mb-4">Rental Details</h3>
+        <form id="bill-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="driving-license">Driving License</label>
+                <input type="text" class="form-control" id="driving-license" placeholder="Enter your driving license" required>
+            </div>
+
+            <!-- Vehicle Dropdown -->
+            <div class="form-group">
+                <label for="vehicle-name">Vehicle Name</label>
+                <select class="form-control" id="vehicle-name" required>
+                    <option value="Toyota Corolla">Toyota Corolla</option>
+                    <option value="Mercedes Benz">Mercedes Benz</option>
+                    <option value="Range Rover Discovery">Range Rover Discovery</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="Ford Everest">Ford Everest</option>
+                </select>
+            </div>
+
+            <!-- Pickup Location Dropdown -->
+            <div class="form-group">
+                <label for="location">Pickup Location</label>
+                <select class="form-control" id="location" required>
+                    <option value="London, GB">London, GB</option>
+                    <option value="Glasgow, Scotland">Glasgow, Scotland</option>
+                    <option value="Edinburgh, Scotland">Edinburgh, Scotland</option>
+                    <option value="Manchester, GB">Manchester, GB</option>
+                    <option value="Aberdeen, Scotland">Aberdeen, Scotland</option>
+                </select>
+            </div>
+
+            <!-- Return Location Dropdown -->
+            <div class="form-group">
+                <label for="return-location">Return Location</label>
+                <select class="form-control" id="return-location" required>
+                    <option value="London, GB">London, GB</option>
+                    <option value="Glasgow, Scotland">Glasgow, Scotland</option>
+                    <option value="Edinburgh, Scotland">Edinburgh, Scotland</option>
+                    <option value="Manchester, GB">Manchester, GB</option>
+                    <option value="Aberdeen, Scotland">Aberdeen, Scotland</option>
+                </select>
+            </div>
+
+            <!-- Rental and Payment Details Table -->
+            <h3 class="text-center mb-4">Payment Summary</h3>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Subtotal</th>
+                    <td id="subtotal">$200</td>
+                </tr>
+                <tr>
+                    <th>Tax (10%)</th>
+                    <td id="tax">$20</td>
+                </tr>
+                <tr class="total-cost">
+                    <th>Total</th>
+                    <td id="total">$220</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Button to Generate PDF -->
+            <button type="button" class="btn btn-primary btn-block" onclick="generatePDF()">Generate PDF</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-4 bg-dark text-white">
+    <div class="container">
+        <p>&copy; 2024 CarZest Rentals. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- jsPDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Fetch values from the form
+        const name = document.getElementById("name").value;
+        const license = document.getElementById("driving-license").value;
+        const vehicle = document.getElementById("vehicle-name").value;
+        const location = document.getElementById("location").value;
+        const returnLocation = document.getElementById("return-location").value;
+        const subtotal = document.getElementById("subtotal").innerText;
+        const tax = document.getElementById("tax").innerText;
+        const total = document.getElementById("total").innerText;
+
+        // Add content to PDF
+        doc.setFontSize(18);
+        doc.text("CarZest Bill Summary", 20, 20);
+        doc.setFontSize(12);
+        doc.text(`Name: ${name}`, 20, 30);
+        doc.text(`Driving License: ${license}`, 20, 40);
+        doc.text(`Vehicle: ${vehicle}`, 20, 50);
+        doc.text(`Pickup Location: ${location}`, 20, 60);
+        doc.text(`Return Location: ${returnLocation}`, 20, 70);
+        doc.text(`Subtotal: ${subtotal}`, 20, 90);
+        doc.text(`Tax: ${tax}`, 20, 100);
+        doc.text(`Total: ${total}`, 20, 110);
+
+        // Save the PDF
+        doc.save("Bill_Summary.pdf");
+    }
+</script>
+</body>
+
+</html>

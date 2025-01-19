@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- 1st section index.html  -->
+    <div class="hero">
+        <h1>WELCOME <span class="auto-type"></span></h1>
+        <p>Your Trusted E-Vehicle Rental System</p>
+        <br>
+        <a id="get-car-btn" class="btn btn-primary" href="map.html">Rent your Vehicle Now</a>
+    </div>
+
+
+    <style>
+        .text-black-div {
+            color: black;
+        }
+
+        .center-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            /* Center align the video */
+            align-items: center;
+            /* Vertically center align if needed */
+            margin: 0 auto;
+            /* Center the container */
+        }
+
+        .video-iframe {
+            width: 100%;
+            /* Full width of the container */
+            height: 80vh;
+            /* Adjust height as needed (80% of the viewport height) */
+            max-width: 800px;
+            /* Set a maximum width for larger screens */
+            border-radius: 10px;
+            /* Optional: add rounded corners */
+        }
+
+        .max-w-4xl {
+            width: 100%;
+            /* Full width for small screens */
+            max-width: 800px;
+            /* Set a maximum width for larger screens */
+            height: auto;
+            /* Allow height to adjust based on content */
+        }
+
+        .video-container {
+            width: 100%;
+            /* Full width of the parent container */
+            height: auto;
+            /* Adjust height automatically based on the iframe */
+            position: relative;
+            /* Position for absolute children if needed */
+        }
+
+        .video-container::before {
+            content: "";
+            display: block;
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
+        }
+
+        .video-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            /* Remove border */
+            border-radius: 10px;
+            /* Optional: add rounded corners */
+        }
+    </style>
+
+    <!-- 2nd Section Video Section -->
+
+    <div class="max-w-4xl mx-auto p-8 bg-white bg-opacity-90 shadow-md rounded-lg mt-12">
+        <h2 class="text-2xl font-bold mb-6 text-center">
+            Watch Our Introduction Video
+        </h2>
+        <div class="video-container">
+            <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen="" class="video-iframe" frameborder="0" src="../static/video/video.mp4">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- 3rd Section which includes vehicles -->
+
+    <div class="bg-white py-12 flex-grow flex flex-col justify-center"
+         style="background-image: url('https://www.freepik.com/free-photo/person-using-electric-scooter-city_24481720.htm#fromView=search&page=1&position=2&uuid=6da74bbf-4d71-4b94-ba21-80887c552e15'); background-size: cover; background-position: center;">
+        <h2 class="text-center text-2xl font-bold mb-8 text-pink-500">
+            Featured Electric Vehicles
+        </h2>
+        <div class="vehicles">
+            <div class="vehicle-card">
+                <img alt="Electric Scooter"
+                     src="https://storage.googleapis.com/a1aa/image/XaBN43MRHFKcB5Abepeyk8WWGNgNLYtqSUzyyCzv7VZXIWtTA.jpg" />
+                <h3 class="mt-3">Electric Scooter</h3>
+                <p>Experience the future of urban mobility with our electric scooters.</p>
+                <a class="btn btn-primary mt-3" href="E-Scooter.html">Read More <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <div class="vehicle-card">
+                <img alt="Electric Bike"
+                     src="https://storage.googleapis.com/a1aa/image/CjHfB1DoWzQQZyTV5DYrQNuLNxifv6r2x2AmM5JxQMqYIWtTA.jpg" />
+                <h3 class="mt-3">Electric Bike</h3>
+                <p>Discover the joy of effortless cycling with our electric bikes.</p>
+                <a class="btn btn-primary mt-3" href="E-Bike.html">Read More <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- how it works div -->
+    <main class="max-w-4xl mx-auto p-8 bg-white bg-opacity-90 shadow-md rounded-lg">
+        <h1 class="text-3xl font-bold mb-6 text-center">How it works</h1>
+        <!-- Flex container to align images horizontally -->
+        <div class="flex justify-between space-x-8">
+            <div class="flex-1 text-center">
+                <img alt="Illustration of a smartphone with the app open" class="mx-auto mb-2" height="150"
+                     src="https://storage.googleapis.com/a1aa/image/sJ4hg70HqLKcK9y2gs5kafqgGjzcsek9gUPTAmzAsaoXff3OB.jpg"
+                     width="100" />
+                <p>Open the app</p>
+            </div>
+
+            <div class="flex-1 text-center">
+                <img alt="Illustration of a map with a location pin" class="mx-auto mb-2" height="150"
+                     src="https://storage.googleapis.com/a1aa/image/2b7k0GNcZmKYGp53caVJiiU33GVUXSog53GyVue2leEaff3OB.jpg"
+                     width="100" />
+                <p>Choose location</p>
+            </div>
+
+            <div class="flex-1 text-center">
+                <img alt="Illustration of a bike" class="mx-auto mb-2" height="150"
+                     src="https://storage.googleapis.com/a1aa/image/GMGJLO1r5zY1BZ64yOToameffHLJDF8Yradynqxda4j6efvdC.jpg"
+                     width="100" />
+                <p>Rent bike</p>
+            </div>
+        </div>
+    </main>
+
+
+    <main class="max-w-4xl mx-auto p-8 bg-white bg-opacity-90 shadow-md rounded-lg">
+        <div class="w-1/2">
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-blue-700">REGISTER</h2>
+                    <p class="text-black-div">
+                        Download the app or visit the website to get started. Log in to your account or sign up if you
+                        don't have one already. Select your location and choose your rental bike. When you're finished
+                        with your ride, simply return the bike and make your payment.
+                    </p>
+                    <p class="text-black-div">
+                        To verify your account, an automatic £5 deposit is required, which will be added as credit to
+                        use on your next bike hire. And that's it - you're ready to roll!
+                    </p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-blue-700">RENT</h2>
+                    <p class="text-black-div">
+                        Simply scan the QR Code on a bike with the nextbike by CHIME app. The Frame Lock will open
+                        automatically.
+                    </p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-blue-700">RETURN</h2>
+                    <p class="text-black-div">
+                        Simply locate an official station in your app to return your bike. Please note that e-bikes must
+                        be returned specifically to e-bike stations, which you can also find on the app map. Once you
+                        arrive, press the Frame Lock lever down until it beeps. Always return bikes to an official
+                        station to avoid a service fee.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+    <script>
+        var typed = new Typed(".auto-type", {
+            strings: ["to CHIME!"],
+            typeSpeed: 150,
+            backSpeed: 150,
+            loop: true
+        });
+    </script>
+
+
+{% endblock %}

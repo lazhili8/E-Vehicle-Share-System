@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - CarZest</title>
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="C:/Users/Piyush/Desktop/website/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Messages Page Styling */
+        .messages-bg {
+            background-image: url('../../../static/images/messages_background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .messages-bg h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .message-list {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .message-list .card {
+            margin-bottom: 20px;
+        }
+
+        .send-message-form {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="index.html">
+        <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/logo.jpg" width="40" />
+        C H I M E
+    </a>
+    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-ul-li-a">
+                <a class="nav-link active" href="index.html">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">
+                    About Us
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="vehicle.html">
+                    Vehicles
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Vehicles
+                </a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="map.html">
+                    Location
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Location
+                </a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="account.html">
+                    MyAccount
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="register.html">
+                    Register
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Login
+                </a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="contact_us.html">
+                    Contact Us
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <!-- Messages Hero Section -->
+    <div class="messages-bg">
+        <h1>Your Messages</h1>
+    </div>
+
+    <!-- Message Inbox Section -->
+    <div class="container message-list">
+        <h3>Inbox</h3>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Message 1</h5>
+                <p class="card-text">Hello, your booking for the Honda City is confirmed for 10th October. Let us know if you need any changes.</p>
+                <p class="card-text"><small class="text-muted">Sent on: 09 Oct 2024</small></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Message 2</h5>
+                <p class="card-text">Your Ford Mustang is available for rent from 15th October. You can complete the payment online.</p>
+                <p class="card-text"><small class="text-muted">Sent on: 08 Oct 2024</small></p>
+            </div>
+        </div>
+
+        <!-- Add more messages as needed -->
+    </div>
+
+    <!-- Send Message Section -->
+    <div class="container send-message-form">
+        <h4>Send a Message</h4>
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 bg-dark text-white">
+        <div class="container">
+            <p>&copy; 2024 CarZest Rentals. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Vehicles - Chime</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+body {
+            background-color: #f8f9fa; /* Light background color */
+            font-family: Arial, sans-serif; /* Font style */
+        }
+
+        .move-header {
+            background: rgba(40, 167, 69, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: space-between; /* Space between items */
+        }
+
+        .vehicle-list,
+        .location-list {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s; /* Smooth shadow transition */
+        }
+
+        .vehicle-list:hover,
+        .location-list:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Space between checkbox and text */
+        }
+
+        .btn-custom {
+            background: #28a745; /* Green background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 20px; /* Padding */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background 0.3s; /* Transition for hover effect */
+        }
+
+        .btn-custom:hover {
+            background: #218838; /* Darker green on hover */
+        }
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 100;
+            color: black;
+        }
+
+        .navbar {
+            background-color: #364451;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+        .navbar ul li a {
+            color: white;
+            /* This sets the font color of the navbar links to white */
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            color: black;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.8s;
+        }
+
+        .nav-link:hover {
+            background-color: plum;
+        }
+
+        .nav-link.active {
+            background-color: #FF66CC;
+            color: white;
+        }
+
+        body {
+            background-image: url('https://img.freepik.com/free-photo/road-with-multiple-parked-cars-san-diego_1268-15584.jpg?t=st=1731097535~exp=1731101135~hmac=2a849bf3ddff7eb9a688ca712eed5ee24e2b8814d118c46fa57d7a9ae8c7cd44&w=740');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .move-header {
+            background: rgba(40, 167, 69, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .vehicle-list,
+        .location-list {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-custom {
+            background: #28a745;
+            color: #fff;
+            transition: background 0.3s;
+            width: auto;
+            margin-top: 20px;
+            text-align: center;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-custom:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">
+            <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/bike.jpg" width="40" />
+            <span class="text-white text-2xl font-bold">C H I M E</span>
+        </a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">
+                        Home
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'operator_home' %}">
+                        MyDashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        Logout
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">
+                        Login
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Header -->
+    <div class="container">
+        <div class="move-header">
+            <h2>Move Vehicles</h2>
+            <p>Move vehicles to different locations around the city as needed.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Vehicle List (Left) -->
+        <div class="vehicle-list">
+            <h5>Select Vehicles to Move</h5>
+            <ul class="list-group">
+                {% for vehicle in vehicles %}
+                <li class="list-group-item">
+                    <input type="checkbox" class="vehicle-checkbox" data-vehicle-id="{{ vehicle.vehicleID }}">
+                    <span>Vehicle ID: {{ vehicle.vehicleID }}, Type: {{ vehicle.type }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Location List (Right) -->
+        <div class="location-list">
+            <h5>Select Target Location</h5>
+            <ul class="list-group">
+                {% for location in locations %}
+                <li class="list-group-item">
+                    <input type="radio" name="location" class="location-radio" data-location-id="{{ location.locationID }}">
+                    <p>Location ID: {{ location.locationID }}</p>
+                    <p>Address: {{ location.address}}</p>
+                    <p>latitude: {{ location.position_x }}</p>
+                    <p>longitude: {{ location.position_y }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button class="btn-custom" onclick="moveSelectedVehicles()">Move Now</button>
+    </div>
+
+    <!-- JavaScript for Batch Move Functionality -->
+    <script>
+        function moveSelectedVehicles() {
+            const selectedVehicles = Array.from(document.querySelectorAll('.vehicle-checkbox:checked'))
+                .map(checkbox => checkbox.getAttribute('data-vehicle-id'));
+            const selectedLocation = document.querySelector('.location-radio:checked');
+
+            if (selectedVehicles.length === 0 || !selectedLocation) {
+                alert("Please select at least one vehicle and a target location.");
+                return;
+            }
+
+            const locationID = selectedLocation.getAttribute('data-location-id');
+
+            // Send AJAX request to move vehicles to the target location
+            fetch('/move_vehicles/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    vehicles: selectedVehicles,
+                    location_id: locationID
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Vehicles have been successfully moved!');
+                        location.reload();
+                    } else {
+                        alert('Failed to move vehicles: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while moving vehicles.');
+                });
+        }
+    </script>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

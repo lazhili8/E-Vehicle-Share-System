@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    9	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            background-color: lightgray;
+        }
+        .details-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        .detail-item span {
+            font-weight: bold;
+        }
+        .btn {
+            padding: 10px 20px;
+            /* Button padding */
+            margin: 10px;
+            /* Space around buttons */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            /* Gray background for secondary button */
+            color: white;
+            /* White text */
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            /* Blue background for primary button */
+            color: white;
+            /* White text */
+        }
+    </style>
+</head>
+<body>
+    <div class="container details-container">
+        <h1>Rental Details</h1>
+        <div class="detail-item">
+            <span>Rental ID:</span> {{ rental.rentalID }}
+        </div>
+        <div class="detail-item">
+            <span>Vehicle Type:</span> {{ rental.vehicle.type }}
+        </div>
+        <div class="detail-item">
+            <span>Start Time:</span> {{ rental.startTime }}
+        </div>
+        <div class="detail-item">
+            <span>End Time:</span> {{ rental.endTime }}
+        </div>
+        <div class="detail-item">
+            <span>Payment Status:</span>
+            {% if payment and payment.is_paid %}
+                Paid ({{ payment.amount }} USD)
+            {% else %}
+                Not Paid
+            {% endif %}
+        </div>
+        <div class="detail-item">
+            <span>Card Number:</span> {% if payment %} {{ payment.cardNumber }} {% else %} N/A {% endif %}
+        </div>
+        <div class="detail-item">
+            <span>Expiry Date:</span> {% if payment %} {{ payment.expiryDate }} {% else %} N/A {% endif %}
+        </div>
+
+        <div class="mt-4">
+            <a href="{% url 'account' %}" class="btn btn-secondary">Back to Account</a>
+            <button id="generate-pdf" class="btn btn-primary">Generate PDF</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('generate-pdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add content to the PDF
+            doc.text('Rental Details', 20, 20);
+            doc.text('Rental ID: {{ rental.rentalID }}', 20, 30);
+            doc.text('Vehicle Type: {{ rental.vehicle.type }}', 20, 40);
+            doc.text('Start Time: {{ rental.startTime }} ', 20, 50);
+            doc.text('End Time: {{ rental.endTime }}', 20, 60);
+            doc.text('Payment Status:', 20, 70);
+            if ({% if payment and payment.is_paid %} true {% else %} false {% endif %}) {
+            doc.text('Paid ({{ payment.amount }} USD)', 20, 80);
+        } else {
+            doc.text('Not Paid', 20, 80);
+        }
+        doc.text('Card Number: {% if payment %} {{ payment.cardNumber }} {% else %} N/A {% endif %}', 20, 90);
+        doc.text('Expiry Date: {% if payment %} {{ payment.expiryDate }} {% else %} N/A {% endif %}', 20, 100);
+        doc.text('CVV: {% if payment %} {{ payment.cvv }} {% else %} N/A {% endif %}', 20, 110);
+
+        // Save the PDF
+        const pdf = doc.output('blob');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(pdf);
+        a.download = 'rental_details.pdf';
+        a.click();
+        });
+    </script>
+</body>
+</html>

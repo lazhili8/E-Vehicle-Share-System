@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHIME- Return Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .return-container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .return-container h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .payment-info {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .pay-button {
+            background-color: #28a745;
+            color: white;
+            width: 150px;
+            height: 50px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .pay-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="return-container">
+    <h2>Thank you for using CHIME!</h2>
+    <div class="payment-info"><strong>Rental ID:</strong> {{ rental.rentalID }}</div>
+    <div class="payment-info"><strong>Vehicle Type:</strong> {{ rental.vehicle.type }}</div>
+    <div class="payment-info" id="rentalTime"><strong>Rental Time:</strong> {{ duration }}</div>
+    <div class="payment-info"><strong>Total Amount:</strong> £{{ cost }}</div>
+    <button class="pay-button" id="payButton">Pay now</button>
+</div>
+
+<script>
+    let rentalId = getQueryParameter('rental_id');
+    console.log(rentalId);
+    function getQueryParameter(name) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+    if (!rentalId) {
+        console.log("No rental_id found in URL");
+    } else {
+        fetch(`/end_rental/${rentalId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('rentalTime').innerHTML = `<strong>Rental Time:</strong> ${data.rental_time}`;
+                document.querySelector('.payment-info').innerHTML = `<strong>Total Amount:</strong> £${data.cost}`;
+            })
+            .catch(error => console.error('Error fetching rental information:', error));
+    }
+    
+    function fetchRentalInfo(rentalId) {
+        fetch(`/get_rental_cost/?rental_id=${rentalId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.rental_time) {
+                    document.getElementById('rentalTime').textContent = `Rental Time: ${data.rental_time}`;
+                }
+                if (data.cost) {
+                    document.querySelectorAll('.payment-info')[1].textContent = `Total Amount: £${data.cost}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching rental information:', error);
+            });
+    }
+    document.getElementById('payButton').addEventListener('click', () => {
+        window.location.href = "{% url 'pay' %}";
+    });
+
+</script>
+
+</body>
+
+</html>

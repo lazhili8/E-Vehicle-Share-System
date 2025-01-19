@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarZest - Moving Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .rent-container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .rent-container h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .return-button {
+            background-color: #dc3545;
+            color: white;
+            width: 150px;
+            height: 50px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .return-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="rent-container">
+    <h2>You have rent the bike successfully, please ride safely!</h2>
+    <div class="timer" id="timer">Time Elapsed: 00:00:00</div>
+    <button class="return-button" id="returnButton">Return Now</button>
+    
+    <div id="rentalId" data-rental-id="{{ rental_id }}"></div>
+</div>
+
+<script>
+    const rentalId = document.getElementById('rentalId').dataset.rentalId;
+
+  
+    let timerInterval;
+    let startTime = new Date(); 
+    
+    function formatTime(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+    
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            let now = new Date(); 
+            let elapsedTime = Math.floor((now - startTime) / 1000); 
+
+            let hours = Math.floor(elapsedTime / 3600);
+            let minutes = Math.floor((elapsedTime % 3600) / 60);
+            let seconds = elapsedTime % 60;
+
+            document.getElementById('timer').textContent = `Time Elapsed: ${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+        }, 1000); 
+    }
+    
+    startTimer();
+    
+    document.getElementById('returnButton').addEventListener('click', () => {
+        clearInterval(timerInterval);
+        let now = new Date();
+        let elapsedTime = Math.floor((now - startTime) / 1000);
+
+        let hours = Math.floor(elapsedTime / 3600);
+        let minutes = Math.floor((elapsedTime % 3600) / 60);
+        let seconds = elapsedTime % 60;
+        
+        let timeString = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+        
+        let rentalId = document.getElementById('rentalId').dataset.rentalId;
+        let url = `/end_rental/${rentalId}/?time=${timeString}`;
+
+        console.log(url); 
+        window.location.href = url; 
+    });
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair Vehicles - Chime</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 100;
+            color: black;
+        }
+
+        .navbar {
+            background-color: #364451;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+        .navbar ul li a {
+            color: white;
+            /* This sets the font color of the navbar links to white */
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            color: black;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.8s;
+        }
+
+        .nav-link:hover {
+            background-color: plum;
+        }
+
+        .nav-link.active {
+            background-color: #FF66CC;
+            color: white;
+        }
+
+        body {
+            background-image: url('https://img.freepik.com/free-photo/from-close-up-hydroalcoholic-gel_23-2148858961.jpg?t=st=1731097383~exp=1731100983~hmac=8577ba4d09066f62ba600ef0aae5cf6afc3586d01eacd415597cd90c3d9c5d9c&w=826');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        .repair-header {
+            background: rgba(220, 53, 69, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-custom {
+            background: #dc3545;
+            color: #fff;
+            transition: background 0.3s;
+        }
+
+        .btn-custom:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">
+            <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/bike.jpg" width="40" />
+            <span class="text-white text-2xl font-bold">C H I M E</span>
+        </a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">
+                        Home
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'operator_home' %}">
+                        MyDashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        Logout
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">
+                        Login
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Repair Vehicles Section -->
+    <div class="container my-5">
+        <a href="{% url 'operator_home' %}" class="btn btn-custom mb-4">Back to Dashboard</a>
+
+        <div class="repair-header">
+            <h2>Repair Vehicles</h2>
+            <p>View and repair defective vehicles to maintain optimal fleet performance.</p>
+        </div>
+
+        <!-- Defective Vehicles List -->
+        <div class="row mt-4" id="vehicleList">
+            {% for vehicle in defective_vehicles %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vehicle ID: {{ vehicle.vehicleID }}</h5>
+                        <p class="card-text">Type: {{ vehicle.type }}</p>
+                        <p class="card-text">Battery Status: {{ vehicle.batteryStatus }}%</p>
+                        <p class="card-text">Position X: {{ vehicle.position_x }}</p>
+                        <p class="card-text">Position Y: {{ vehicle.position_y }}</p>
+                        <button class="btn btn-custom" onclick="repairVehicle({{ vehicle.vehicleID }}, this)">Repair
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    All vehicles are fully functional! No repairs needed.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to handle Repair Now button click -->
+    <script>
+        function repairVehicle(vehicleId, button) {
+            fetch(`/repair_vehicle/${vehicleId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',  // CSRF token for secure requests
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Update button text and style after successful repair
+                        button.textContent = 'Repaired';
+                        button.disabled = true;
+                        button.classList.remove('btn-custom');
+                        button.classList.add('btn-success');
+                    } else {
+                        alert('Failed to repair vehicle.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>

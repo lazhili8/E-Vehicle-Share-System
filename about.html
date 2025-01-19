@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <title>About Us - CHIME</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            color: #333;
+        }
+
+        .about-hero-section {
+            background: url('../static/images/images/section2.jpg') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .about-hero-section h1 {
+            font-size: 60px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .my-5 {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .img-fluid {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- About Us Hero Section -->
+<header class="about-hero-section">
+    <h1>About Us</h1>
+</header>
+
+<!-- About Us Content -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Our Story</h2>
+            <p style="text-align: justify; font-weight: bold;">Seven friends from diverse backgrounds meeting at one
+                course at University of Glasgow—a tech enthusiast, analyst, engineer, and more—were exploring
+                Glasgow when they became frustrated with the limited, high-impact transport options. They envisioned
+                a new way to get around: app-based rentals of e-bikes and e-scooters, allowing easy, eco-friendly
+                city travel. Excited by the idea, they pooled their skills and created "CHIME," a company committed
+                to providing sustainable, hassle-free mobility options for Glasgow’s residents and visitors. Today,
+                CHIME’s fleet of e-bikes and e-scooters empowers people to explore the city efficiently and
+                sustainably, reducing congestion and emissions for a greener Glasgow.</p>
+
+        </div>
+        
+        <div class="col-md-6">
+            <img src="../static/images/images/ourstory.jpg" alt="CHIME Fleet" class="img-fluid rounded">
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <img src="../static/images/happy_customer.jpg" alt="CHIME Team" class="img-fluid rounded">
+        </div>
+        <div class="col-md-6">
+            <h2>Our Vision & Mission</h2>
+            <p style="text-align: justify; font-weight: bold;">Our vision to create a greener, more connected
+                Glasgow by redefining urban mobility with sustainable, accessible e-bike and e-scooter rentals for
+                everyone.</p>
+            <p style="text-align: justify; font-weight: bold;">At CHIME, we aim to transform city travel by
+                providing eco-friendly, convenient e-bikes and e-scooters that reduce congestion, lower emissions,
+                and empower Glasgow’s residents and visitors to explore their city with ease and responsibility. We
+                are committed to promoting a healthier, cleaner urban environment by offering a reliable and
+                sustainable alternative to traditional transportation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{%endblock%}

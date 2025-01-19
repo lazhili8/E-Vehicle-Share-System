@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <title>Shared Electric Scooter | E-Scooter</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+
+        header {
+            padding: 20px 0;
+            text-align: center;
+            
+            color: black;
+            animation: slideInDown 1s ease-out;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+
+        section {
+            display: flex;
+            justify-content: space-between;
+            padding: 70px 10%;
+            align-items: center;
+            background-color: antiquewhite;
+            position: relative;
+        }
+
+        .carousel {
+            position: relative;
+            max-width: 500px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .carousel img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .carousel img.active {
+            display: block;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 1.5em;
+        }
+
+        .content {
+            max-width: 600px;
+            animation: slideInLeft 1.5s ease-out;
+        }
+
+        .content h2 {
+            color: #495057;
+            font-size: 6em;
+            margin-bottom: 30px;
+        }
+
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .features li {
+            background-color: #e0f7ff;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            border-left: 5px solid #007BFF;
+            animation: slideInRight 1s ease-out;
+        }
+        .cta-button {
+            display: inline-block; /* Make the link behave like a button */
+            background-color: blue; /* Blue background */
+            color: pink; /* Pink text color */
+            padding: 15px 30px; /* Padding around the text */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 1.2em; /* Larger font size */
+            margin-top: 20px; /* Space above the button */
+        }
+        .cta-button:hover {
+            background-color: darkblue; /* Darker blue on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>
+            E-Scooter - Shared Electric Scooter
+        </h1>
+    </header>
+    <section>
+        <div class="content">
+            <h2>
+                Efficient and Sustainable Urban Mobility
+            </h2>
+            <p>
+                Our shared E-Scooters are designed for quick and convenient rides across town. Perfect for short
+                commutes, errands, or a fun way to explore the city sustainably.
+            </p>
+            <div class="features">
+                <h3>
+                    Key Features:
+                </h3>
+                <ul>
+                    <li>
+                        Color: white and black
+                    </li>
+                    <li>
+                        Wheel Size: 10 inch
+                    </li>
+                    <li>
+                        Top speed of 25km/h
+                    </li>
+                    <li>
+                        Long-lasting battery, perfect for long distances
+                    </li>
+                    <li>
+                        Conveniently unlock with our mobile app
+                    </li>
+                </ul>
+            </div>
+            <a class="cta-button" href="login.html">
+                Start Riding Now
+            </a>
+        </div>
+        <div class="carousel">
+            <img alt="Electric scooter in a city park" class="active" height="300"
+                src="../static/images/escooterb1.jpg"
+                width="500" />
+            <img alt="Electric scooter parked near a cafe" height="300"
+                src="../static/images/escooterb2.jpg"
+                width="500" />
+            <img alt="Electric scooter on a busy street" height="300"
+                src="../static/images/escooterb3.jpg"
+                width="500" />
+            <img alt="Electric scooter by the beach" height="300"
+                src="../static/images/escooterb4.jpg"
+                width="500" />
+            <div class="carousel-controls">
+                <span class="carousel-control prev">
+                    &lt;
+                </span>
+                <span class="carousel-control next">
+                    &gt;
+                </span>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="content">
+            <p>
+                We have another E-Scooter model for you to choose from.
+            </p>
+            <div class="features">
+                <h3>
+                    Key Features:
+                </h3>
+                <ul>
+                    <li>
+                        Color: black
+                    </li>
+                    <li>
+                        Wheel Size: 12 inch
+                    </li>
+                    <li>
+                        Top speed of 30km/h
+                    </li>
+                    <li>
+                        Long-lasting battery, perfect for long distances
+                    </li>
+                    <li>
+                        Conveniently unlock with our mobile app
+                    </li>
+                </ul>
+            </div>
+            <a class="cta-button" href="#">
+                Start Riding Now
+            </a>
+        </div>
+        <div class="carousel">
+            <img alt="Black electric scooter in a city park" class="active" height="300"
+                src="../static/images/escooterc1.jpg"
+                width="500" />
+            <img alt="Black electric scooter parked near a cafe" height="300"
+                src="../static/images/escooterc2.jpg"
+                width="500" />
+            <img alt="Black electric scooter on a busy street" height="300"
+                src="../static/images/escooterc3.jpg"
+                width="500" />
+            <img alt="Black electric scooter by the beach" height="300"
+                src="../static/images/escooterc4.jpg"
+                width="800" />
+            <div class="carousel-controls">
+                <span class="carousel-control prev">
+                    &lt;
+                </span>
+                <span class="carousel-control next">
+                    &gt;
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 初始化轮播图
+        const carousels = document.querySelectorAll('.carousel');
+        carousels.forEach((carousel) => {
+            const images = carousel.querySelectorAll('img');
+            const prevButton = carousel.querySelector('.carousel-control.prev');
+            const nextButton = carousel.querySelector('.carousel-control.next');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                images.forEach((img, index) => img.classList.toggle('active', index === currentIndex));
+            }
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                updateCarousel();
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                updateCarousel();
+            });
+
+            setInterval(() => {
+                currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                updateCarousel();
+            }, 3000);
+        });
+    </script>
+
+</body>
+
+</html>
+
+{%endblock%}

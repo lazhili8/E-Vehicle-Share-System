@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles - CarZest</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+  
+        .navbar {
+            background-color: #364451; 
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #495057;
+            color: white;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #FF66CC;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* Vehicles Section */
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .btn-primary {
+            background-color: #FF66CC;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #e55ab1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="index.html">
+        <img alt="Chime Logo" height="40" id="chime-logo" src="../static/images/logo.jpg" width="40" />
+        C H I M E
+    </a>
+    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-ul-li-a">
+                <a class="nav-link" href="index.html">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">
+                    About Us
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link active" href="vehicle.html">
+                    Vehicles
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link " href="login.html">
+                    Vehicles
+                </a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="map.html">
+                    Location
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Location
+                </a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="account.html">
+                    MyAccount
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="register.html">
+                    Register
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    Login
+                </a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="contact_us.html">
+                    Contact Us
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero Section for Vehicles -->
+<section class="hero-section" style="background-image: url('../static/images/wide_range.jpg'); height: 300px;">
+    <div class="container text-white text-center d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+        <h1 class="display-4">Find the Perfect Car for Your Journey</h1>
+        <p class="lead" style="color: #f8f9fa;">From economy to luxury, we have it all!</p>
+    </div>
+</section>
+
+<!-- Main Vehicles Grid -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Available Vehicles</h2>
+    <div class="row">
+        <!-- Car 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="../static/images/car1.jpg" class="card-img-top" alt="Honda City">
+                <div class="card-body">
+                    <h5 class="card-title">Honda City</h5>
+                    <p class="card-text">Rent per day: $40</p>
+                    <a href="bill.html" class="btn btn-primary">Rent Now</a>
+                </div>
+            </div>
+        </div>
+        <!-- Car 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="../static/images/car2.jpg" class="card-img-top" alt="Toyota Corolla">
+                <div class="card-body">
+                    <h5 class="card-title">Toyota Corolla</h5>
+                    <p class="card-text">Rent per day: $50</p>
+                    <a href="bill.html" class="btn btn-primary">Rent Now</a>
+                </div>
+            </div>
+        </div>
+        <!-- Car 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="../static/images/car3.jpg" class="card-img-top" alt="Ford Mustang">
+                <div class="card-body">
+                    <h5 class="card-title">Ford Mustang</h5>
+                    <p class="card-text">Rent per day: $80</p>
+                    <a href="bill.html" class="btn btn-primary">Rent Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-4 bg-dark text-white">
+    <div class="container">
+        <p>&copy; 2024 CarZest Rentals. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
