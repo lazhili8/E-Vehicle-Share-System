@@ -1,15 +1,18 @@
 # E-Vehicle-Share-System
 E-Vehicle Share System
-CHIME E-Vehicle Sharing System by Group3 Lab 11 team
+CHIME E-Vehicle Sharing System 
 
-
-Authors: Anshumaan Singh
-Piyush Bist
-Xinyuan Pei
-Xinyao Hao
-Yu Li
-Kaizhi Li
-Yue Hu
+![image](https://github.com/user-attachments/assets/7d739f2a-b8a5-45f5-8d96-04bb46efa754)
+![image](https://github.com/user-attachments/assets/1e511943-914c-4152-b4ef-a85f4fb7a2d3)
+![image](https://github.com/user-attachments/assets/bec0f619-1350-4269-a144-51fe5052982a)
+![image](https://github.com/user-attachments/assets/90f62db8-0f50-46f3-8918-c65dac2ccbcf)
+![image](https://github.com/user-attachments/assets/7048b2f1-8f76-4fc4-bdcf-4bf9281e559b)
+![image](https://github.com/user-attachments/assets/3ecde0ae-8478-455d-8ff1-295a439c1150)
+![image](https://github.com/user-attachments/assets/35553271-7cda-47fc-ba24-4c4f6b6d538c)
+![image](https://github.com/user-attachments/assets/d2f23bfe-8cf3-460e-95c6-a1e7a3edb319)
+![image](https://github.com/user-attachments/assets/4a374347-95c2-42fd-9963-5e6ddc2452c6)
+![image](https://github.com/user-attachments/assets/ed6d1c8a-ad68-4593-bf5c-823279a17002)
+![image](https://github.com/user-attachments/assets/bcb9313e-85f5-4d35-b4c7-63cb6dfebc97)
 
 
 
